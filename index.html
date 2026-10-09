@@ -10,7 +10,7 @@
 <title>Joyeux anniversaire Mariko Mariam 🎂</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=2">
 </head>
 <body>
 <a class="skip-link" href="#histoire-section">Aller aux souvenirs</a>
@@ -18,14 +18,15 @@
 <div class="bg" aria-hidden="true"></div>
 <div class="floaters" id="floaters" aria-hidden="true"></div>
 <canvas id="confetti" aria-hidden="true"></canvas>
+<div class="reading-progress" aria-hidden="true"><span id="progress-bar"></span></div>
 
 <!-- Écran d'accueil -->
 <div id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-title" hidden>
   <div>
     <span class="intro-kicker">UNE JOURNÉE RIEN QUE POUR TOI</span>
-    <span class="gift" aria-hidden="true">🎁</span>
+    <div class="envelope-art" aria-hidden="true"><div class="envelope-letter">Pour Mariam<span>avec le cœur ♡</span></div><div class="envelope-front"></div><span class="envelope-seal">M</span></div>
     <h2 id="intro-title">Une surprise t'attend, Mariam…</h2>
-    <p>Prépare-toi, c'est pour toi ✨</p>
+    <p>Quelques souvenirs, beaucoup d’affection,<br>et une journée à célébrer ensemble.</p>
     <button class="btn" id="ouvrir">Découvrir ma surprise</button>
   </div>
 </div>
@@ -35,23 +36,19 @@
 <main id="main-content">
 
 <header class="hero" id="accueil">
-  <div class="top">🎉 10 octobre 🎉</div>
-  <h1 id="titre" aria-label="Joyeux anniversaire"></h1>
-  <div class="nom script" id="nom"></div>
-  <p class="sub" id="sousTitre"></p>
-  <a class="hero-link" href="#souvenirs">Feuilleter nos souvenirs <span>↗</span></a>
-  <span class="hero-footnote">Depuis Pigier, en 2024 · Avec toute mon affection</span>
-  <a class="down" href="#histoire-section" aria-label="Découvrir notre histoire">⌄</a>
+ <div class="hero-copy"><div class="top">10 OCTOBRE · TA JOURNÉE</div><h1 id="titre" aria-label="Joyeux anniversaire"></h1><div class="nom script" id="nom"></div><p class="sub" id="sousTitre"></p><a class="hero-link" href="#souvenirs">Ouvrir notre album <span>↗</span></a><span class="hero-footnote">Un petit bout de notre histoire, rien que pour toi.</span></div>
+ <div class="hero-album" aria-label="La couverture de notre album"><span class="album-star" aria-hidden="true">✧</span><figure class="cover-photo cover-back"><img src="assets/souvenir-08.jpg" width="1100" height="825" alt="Un coucher de soleil entre amis" fetchpriority="high"><figcaption>Les moments qu’on garde ♡</figcaption></figure><figure class="cover-photo cover-front"><img src="assets/souvenir-01.jpg" width="825" height="1100" alt="Notre souvenir entre amis" fetchpriority="high"><figcaption>Toi, moi &amp; nos souvenirs</figcaption></figure><span class="album-sticker">Depuis<br><strong>2024</strong><span>♡</span></span><span class="album-handwriting script">Pour ma meilleure amie</span></div>
+ <a class="down" href="#histoire-section" aria-label="Découvrir notre histoire">↓</a>
 </header>
 
 <section id="histoire-section">
   <div class="titre reveal" data-a="up"><span class="script">Notre histoire</span><h2>Tout a commencé à Pigier</h2><i></i></div>
-  <div class="histoire reveal" data-a="zoom" id="histoire"></div>
+  <div class="histoire reveal" data-a="up" id="histoire"></div><div class="story-milestones reveal" data-a="up"><div><span>01</span><strong>Une rencontre</strong><p>Pigier, 2024</p></div><i aria-hidden="true">♡</i><div><span>02</span><strong>Des souvenirs</strong><p>Des rires à n’en plus finir</p></div><i aria-hidden="true">♡</i><div><span>03</span><strong>Une belle amitié</strong><p>Et tant de moments à venir</p></div></div>
 </section>
 
 <section id="souvenirs">
   <div class="titre reveal" data-a="up"><span class="script">Les souvenirs</span><h2>Nos plus beaux moments</h2><i></i></div>
-  <div class="galerie" id="galerie"></div>
+  <p class="section-intro">Les jours passent. Ces moments restent.<br><span>Touche une photo pour la voir en grand.</span></p><div class="galerie" id="galerie"></div>
 </section>
 
 <section id="videos-section">
@@ -61,14 +58,14 @@
 
 <section id="message">
   <div class="titre reveal" data-a="up"><span class="script">Pour toi</span><h2>Un petit mot</h2><i></i></div>
-  <div class="lettre reveal" data-a="flip" id="lettre"></div>
+  <div class="letter-wrap reveal" data-a="up"><button class="letter-open" id="ouvrir-lettre" aria-expanded="false" aria-controls="lettre"><span class="letter-icon" aria-hidden="true">♡</span><span class="script">Une lettre pour toi</span><span class="letter-prompt">Ouvrir le petit mot de Hounas <span aria-hidden="true">↗</span></span></button><div class="lettre" id="lettre" hidden></div></div>
 </section>
 
-<section id="cadeau" class="gift-section"><div class="gift-note reveal" data-a="up"><div class="gift-illustration" aria-hidden="true">💝</div><div><span class="eyebrow">UN PEU DE PATIENCE, BEAUCOUP D’AFFECTION</span><h2>Ton cadeau arrive bientôt…</h2><p>Une autre surprise est en chemin pour toi ! En attendant, j’avais envie de t’offrir ces souvenirs et de te rappeler à quel point tu comptes pour moi.</p><span class="gift-tag">La suite de ta surprise, très bientôt ✨</span></div></div></section>
+<section id="cadeau" class="gift-section"><div class="gift-note reveal" data-a="up"><div class="gift-illustration" aria-hidden="true">💝</div><div><span class="eyebrow">UN PEU DE PATIENCE, BEAUCOUP D’AFFECTION</span><h2>Ton cadeau arrive bientôt…</h2><p>Une autre surprise est en chemin pour toi ! En attendant, j’avais envie de t’offrir ces souvenirs et de te rappeler à quel point tu comptes pour moi.</p><button class="gift-tag" id="indice" aria-expanded="false" aria-controls="gift-secret">Un petit indice ? <span aria-hidden="true">✧</span></button><p class="gift-secret" id="gift-secret" hidden>Le plus important, c’est qu’il est pour toi. Le reste… je garde encore un peu la surprise ! ♡</p></div></div></section>
 <div class="fin reveal" data-a="zoom">
-  <span class="gateau">🎂</span>
+  <div class="wish-cake" aria-hidden="true"><span class="candle-flame" id="flame"></span><span class="candle"></span><span class="cake-top"></span><span class="cake-base"></span><span class="cake-plate"></span></div>
   <p class="script" style="font-size:2.4rem;margin:10px 0 20px">Joyeux anniversaire !</p>
-  <button class="btn" id="encore">🎉 Encore des confettis !</button>
+  <p class="wish-instruction">Ferme les yeux un instant. Fais un vœu.</p><button class="btn" id="voeu" aria-describedby="wish-result">Souffler ma bougie <span aria-hidden="true">✧</span></button><p class="wish-result" id="wish-result" aria-live="polite"></p><button class="confetti-again" id="encore">Encore un peu de magie ✨</button>
 </div>
 
 </main>
@@ -80,9 +77,9 @@
   <button class="nav prev" id="prev" aria-label="Photo précédente">‹</button>
   <button class="nav next" id="next" aria-label="Photo suivante">›</button>
   <div id="contenu"></div>
-  <div class="cp" id="cp" aria-live="polite"></div>
+  <div class="cp" id="cp" aria-live="polite"></div><span class="photo-counter" id="photo-counter"></span>
 </div>
 
-<script src="app.js" defer></script>
+<script src="app.js?v=2" defer></script>
 </body>
 </html>

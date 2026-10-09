@@ -67,7 +67,7 @@ $('#titre').innerHTML = "Joyeux Anniversaire".split(' ').map(mot =>
 $('#nom').textContent = CONFIG.nomComplet;
 
 /* ---------- fond flottant ---------- */
-const emojis = ['🎈','💖','✨','🎉','🌸','⭐','🎀','💫'];
+const emojis = ['✧','♡','✦','·'];
 $('#floaters').innerHTML = Array.from({length:18}, () =>
   `<span style="left:${Math.random()*100}%;animation-duration:${10+Math.random()*14}s;animation-delay:${-Math.random()*20}s;font-size:${16+Math.random()*26}px">${emojis[Math.random()*emojis.length|0]}</span>`).join('');
 
@@ -114,6 +114,7 @@ function montrerPhoto(i){
   }
   contenu.innerHTML = `<img src="${PHOTOS[idx].src}" alt="${PHOTOS[idx].caption || 'Souvenir avec Mariam'}">`;
   cp.textContent = PHOTOS[idx].caption || '';
+  $('#photo-counter').textContent = `${idx+1} / ${PHOTOS.length}`;
 }
 function ouvrirVideo(i){
   const v = VIDEOS[i]; if(!v.src) return;
@@ -121,6 +122,7 @@ function ouvrirVideo(i){
   contenu.innerHTML = id ? `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="${v.caption || 'Vidéo souvenir'}" allow="autoplay; fullscreen" allowfullscreen></iframe>`
                          : `<video src="${v.src}" controls autoplay playsinline preload="metadata" aria-label="${v.caption}"></video>`;
   cp.textContent = v.caption || '';
+  $('#photo-counter').textContent = '';
   mode = 'video'; activateModal();
   document.querySelectorAll('.nav').forEach(b=>b.style.display='none');
 }
@@ -218,3 +220,31 @@ intro.addEventListener('keydown',e=>{if(e.key==='Tab'){e.preventDefault();$('#ou
 let touchStart=null;
 modal.addEventListener('touchstart',e=>{if(mode==='photo')touchStart=e.changedTouches[0].clientX},{passive:true});
 modal.addEventListener('touchend',e=>{if(mode==='photo'&&touchStart!==null){const delta=e.changedTouches[0].clientX-touchStart;if(Math.abs(delta)>60)suivant(delta<0?1:-1)}touchStart=null},{passive:true});
+
+/* Des surprises qui se découvrent à son rythme. */
+$('#ouvrir-lettre').addEventListener('click',()=>{
+ $('#lettre').hidden=false;
+ $('#ouvrir-lettre').setAttribute('aria-expanded','true');
+ $('#ouvrir-lettre').hidden=true;
+});
+$('#indice').addEventListener('click',()=>{
+ const opened=$('#indice').getAttribute('aria-expanded')==='true';
+ $('#indice').setAttribute('aria-expanded',String(!opened));
+ $('#gift-secret').hidden=opened;
+ if(!opened)confettis(65);
+});
+$('#voeu').addEventListener('click',()=>{
+ $('#flame').classList.add('out');
+ $('#wish-result').textContent='Que ton vœu trouve son chemin. Joyeux anniversaire, Mariam ! ♡';
+ $('#voeu').disabled=true;
+ $('#voeu').textContent='Vœu confié aux étoiles ♡';
+ confettis(180);
+});
+let progressQueued=false;
+function updateProgress(){
+ const travel=document.documentElement.scrollHeight-innerHeight;
+ $('#progress-bar').style.transform='scaleX('+Math.min(1,Math.max(0,travel>0?scrollY/travel:0))+')';
+ progressQueued=false;
+}
+addEventListener('scroll',()=>{if(!progressQueued){progressQueued=true;requestAnimationFrame(updateProgress)}},{passive:true});
+addEventListener('resize',updateProgress);updateProgress();
