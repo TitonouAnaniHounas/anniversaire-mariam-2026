@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#211029">
+<meta name="description" content="Un album de souvenirs et une petite surprise, préparés avec affection pour l’anniversaire de Mariam.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<title>Joyeux anniversaire Mariko Mariam 🎂</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:ital,wght@0,600;1,500&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<a class="skip-link" href="#histoire-section">Aller aux souvenirs</a>
+
+<div class="bg" aria-hidden="true"></div>
+<div class="floaters" id="floaters" aria-hidden="true"></div>
+<canvas id="confetti" aria-hidden="true"></canvas>
+
+<!-- Écran d'accueil -->
+<div id="intro" role="dialog" aria-modal="true" aria-labelledby="intro-title" hidden>
+  <div>
+    <span class="intro-kicker">UNE JOURNÉE RIEN QUE POUR TOI</span>
+    <span class="gift" aria-hidden="true">🎁</span>
+    <h2 id="intro-title">Une surprise t'attend, Mariam…</h2>
+    <p>Prépare-toi, c'est pour toi ✨</p>
+    <button class="btn" id="ouvrir">Découvrir ma surprise</button>
+  </div>
+</div>
+
+<button id="musique" title="Musique" aria-label="Activer ou arrêter la musique">🎵</button>
+<nav class="site-nav" aria-label="Navigation principale"><a class="brand" href="#accueil">Pour Mariam <span>♡</span></a><div><a href="#souvenirs">Souvenirs</a><a href="#message">Petit mot</a><a href="#cadeau">La surprise <span>✧</span></a></div></nav>
+<main id="main-content">
+
+<header class="hero" id="accueil">
+  <div class="top">🎉 10 octobre 🎉</div>
+  <h1 id="titre" aria-label="Joyeux anniversaire"></h1>
+  <div class="nom script" id="nom"></div>
+  <p class="sub" id="sousTitre"></p>
+  <a class="hero-link" href="#souvenirs">Feuilleter nos souvenirs <span>↗</span></a>
+  <span class="hero-footnote">Depuis Pigier, en 2024 · Avec toute mon affection</span>
+  <a class="down" href="#histoire-section" aria-label="Découvrir notre histoire">⌄</a>
+</header>
+
+<section id="histoire-section">
+  <div class="titre reveal" data-a="up"><span class="script">Notre histoire</span><h2>Tout a commencé à Pigier</h2><i></i></div>
+  <div class="histoire reveal" data-a="zoom" id="histoire"></div>
+</section>
+
+<section id="souvenirs">
+  <div class="titre reveal" data-a="up"><span class="script">Les souvenirs</span><h2>Nos plus beaux moments</h2><i></i></div>
+  <div class="galerie" id="galerie"></div>
+</section>
+
+<section id="videos-section">
+  <div class="titre reveal" data-a="up"><span class="script">En mouvement</span><h2>Des instants à revivre</h2><i></i></div>
+  <div class="videos" id="videos"></div>
+</section>
+
+<section id="message">
+  <div class="titre reveal" data-a="up"><span class="script">Pour toi</span><h2>Un petit mot</h2><i></i></div>
+  <div class="lettre reveal" data-a="flip" id="lettre"></div>
+</section>
+
+<section id="cadeau" class="gift-section"><div class="gift-note reveal" data-a="up"><div class="gift-illustration" aria-hidden="true">💝</div><div><span class="eyebrow">UN PEU DE PATIENCE, BEAUCOUP D’AFFECTION</span><h2>Ton cadeau arrive bientôt…</h2><p>Une autre surprise est en chemin pour toi ! En attendant, j’avais envie de t’offrir ces souvenirs et de te rappeler à quel point tu comptes pour moi.</p><span class="gift-tag">La suite de ta surprise, très bientôt ✨</span></div></div></section>
+<div class="fin reveal" data-a="zoom">
+  <span class="gateau">🎂</span>
+  <p class="script" style="font-size:2.4rem;margin:10px 0 20px">Joyeux anniversaire !</p>
+  <button class="btn" id="encore">🎉 Encore des confettis !</button>
+</div>
+
+</main>
+<footer class="site-footer">Fait avec le cœur, par Hounas <span aria-hidden="true">♡</span><a href="#accueil">Revenir en haut ↑</a></footer>
+<noscript><style>#intro{display:none!important}.reveal{opacity:1;transform:none}</style><p class="noscript-note">Active JavaScript pour découvrir l’album et les vidéos de Mariam.</p></noscript>
+<!-- Lightbox / lecteur -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-label="Nos souvenirs" tabindex="-1">
+  <button class="x" id="fermer" aria-label="Fermer le souvenir">✕</button>
+  <button class="nav prev" id="prev" aria-label="Photo précédente">‹</button>
+  <button class="nav next" id="next" aria-label="Photo suivante">›</button>
+  <div id="contenu"></div>
+  <div class="cp" id="cp" aria-live="polite"></div>
+</div>
+
+<script src="app.js" defer></script>
+</body>
+</html>
