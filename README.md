@@ -11,4 +11,4 @@ Pour GitHub Pages : publier la branche main, dossier racine. Un dépôt privé e
 La visite propose une couverture photographique, une lettre à ouvrir, un indice cadeau et une bougie interactive pour faire un vœu. Les interactions prennent en charge le clavier et les préférences de réduction des animations.
 
 
-Musique : Gymnopedie No. 1, Erik Satie, interprétée par Kevin MacLeod (CC BY 4.0). Voir assets/MUSIC-LICENSE.txt. Volume initial : 18 %. Démarrage après ouverture de la surprise, pause pendant le lecteur vidéo, reprise à sa fermeture sauf arrêt manuel.
+Musique : À Chloris, Reynaldo Hahn, chant par Dustin Wirth et piano par Stephen Swanson (CC BY-NC-ND 3.0). Voir assets/MUSIC-LICENSE.txt. Volume initial : 18 %. Pause pendant les vidéos, reprise au même endroit sauf arrêt manuel.

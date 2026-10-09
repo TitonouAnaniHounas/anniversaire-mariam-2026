@@ -11,7 +11,7 @@ const CONFIG = {
   nomComplet: "Mariko Mariam",
   prenom: "Mariam",
   de: "Avec toute mon affection", // Signature publique sans nom personnel
-  musique: "assets/gymnopedie-no-1.mp3",                  // ← lien d'une musique (.mp3) — facultatif
+  musique: "assets/a-chloris.mp3",                  // ← lien d'une musique (.mp3) — facultatif
   sousTitre: "Aujourd'hui, c'est ton jour. Ce petit album est rien que pour toi.",
   histoire: `Nous nous sommes rencontrés à <b>Pigier Côte d'Ivoire</b> en <b>2024</b>.
     Depuis, entre les cours, les fous rires et les bons moments, tu es devenue bien plus qu'une camarade :
@@ -54,7 +54,7 @@ requestAnimationFrame(() => $('#ouvrir').focus());
 
 
 /* ---------- textes ---------- */
-document.title = `Joyeux anniversaire ${CONFIG.nomComplet} 🎂`;
+
 $('#sousTitre').textContent = CONFIG.sousTitre;
 $('#histoire').innerHTML = CONFIG.histoire + '<span class="coeur">💖</span>';
 $('#lettre').innerHTML = CONFIG.message.map(p => `<p>${p}</p>`).join('') + `<span class="signature script">— ${CONFIG.de}</span>`;
@@ -202,7 +202,7 @@ function renderMusic(){
  const label = audio.error ? 'Musique indisponible' : videoMusicSuspended ? 'Musique en pause pendant la vidéo' : musicEnabled && playing ? 'Couper la musique' : 'Activer la musique';
  musicButton.setAttribute('aria-label',label);
  musicButton.title=label;
- $('#music-label').textContent=audio.error ? 'Musique indisponible' : videoMusicSuspended ? 'Pause vidéo' : playing ? 'Piano doux' : 'Musique coupée';
+ $('#music-label').textContent=audio.error ? 'Musique indisponible' : videoMusicSuspended ? 'Pause vidéo' : playing ? 'Chant doux' : 'Musique coupée';
 }
 function syncMusic(){
  if(!audio)return;
@@ -229,6 +229,7 @@ if(audio){
  renderMusic();
 }
 $('#ouvrir').onclick = () => {
+  document.title = `Joyeux anniversaire ${CONFIG.nomComplet} 🎂`;
   $('#intro').classList.add('out');
   document.body.classList.remove('locked');
   document.body.classList.add('go');
