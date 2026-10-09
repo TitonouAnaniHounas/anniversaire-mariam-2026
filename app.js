@@ -10,8 +10,8 @@
 const CONFIG = {
   nomComplet: "Mariko Mariam",
   prenom: "Mariam",
-  de: "Hounas",                 // ← ton nom pour la signature
-  musique: "",                  // ← lien d'une musique (.mp3) — facultatif
+  de: "Avec toute mon affection", // Signature publique sans nom personnel
+  musique: "assets/gymnopedie-no-1.mp3",                  // ← lien d'une musique (.mp3) — facultatif
   sousTitre: "Aujourd'hui, c'est ton jour. Ce petit album est rien que pour toi.",
   histoire: `Nous nous sommes rencontrés à <b>Pigier Côte d'Ivoire</b> en <b>2024</b>.
     Depuis, entre les cours, les fous rires et les bons moments, tu es devenue bien plus qu'une camarade :
@@ -118,6 +118,7 @@ function montrerPhoto(i){
 }
 function ouvrirVideo(i){
   const v = VIDEOS[i]; if(!v.src) return;
+  videoMusicSuspended=true;syncMusic();
   const id = ytId(v.src);
   contenu.innerHTML = id ? `<iframe src="https://www.youtube.com/embed/${id}?autoplay=1&rel=0" title="${v.caption || 'Vidéo souvenir'}" allow="autoplay; fullscreen" allowfullscreen></iframe>`
                          : `<video src="${v.src}" controls autoplay playsinline preload="metadata" aria-label="${v.caption}"></video>`;
@@ -131,6 +132,8 @@ function fermer(){
  modal.classList.remove('open');contenu.innerHTML='';document.body.classList.remove('modal-locked');
  $('#main-content').inert=false;$('.site-nav').inert=false;$('.site-footer').inert=false;
  if(returnFocus)returnFocus.focus({preventScroll:true});
+ if(mode==='video'){videoMusicSuspended=false;syncMusic();}
+ mode='';
 }
 $('#galerie').addEventListener('click', e => {
   const f = e.target.closest('.polaroid'); if(!f) return;
@@ -182,11 +185,48 @@ function boucle(){
 }
 
 /* ---------- ouverture ---------- */
-let audio = null;
-if(CONFIG.musique){
-  audio = new Audio(CONFIG.musique); audio.loop = true;
-  $('#musique').style.display = 'block';
-  $('#musique').onclick = () => { if(audio.paused){ audio.play(); } else { audio.pause(); } };
+const audio = CONFIG.musique ? new Audio(CONFIG.musique) : null;
+let musicEnabled = true;
+let musicOpened = false;
+let videoMusicSuspended = false;
+let musicRequest = 0;
+const musicButton = $('#musique');
+function wantsMusic(){return musicEnabled && musicOpened && !videoMusicSuspended;}
+function renderMusic(){
+ if(!audio)return;
+ musicButton.hidden = !musicOpened;
+ musicButton.disabled = videoMusicSuspended || !!audio.error;
+ musicButton.setAttribute('aria-pressed',String(musicEnabled));
+ const playing = !audio.paused && !videoMusicSuspended;
+ musicButton.classList.toggle('playing',playing);
+ const label = audio.error ? 'Musique indisponible' : videoMusicSuspended ? 'Musique en pause pendant la vidéo' : musicEnabled && playing ? 'Couper la musique' : 'Activer la musique';
+ musicButton.setAttribute('aria-label',label);
+ musicButton.title=label;
+ $('#music-label').textContent=audio.error ? 'Musique indisponible' : videoMusicSuspended ? 'Pause vidéo' : playing ? 'Piano doux' : 'Musique coupée';
+}
+function syncMusic(){
+ if(!audio)return;
+ const request=++musicRequest;
+ if(!wantsMusic()){audio.pause();renderMusic();return;}
+ audio.play().then(()=>{
+  if(!wantsMusic())audio.pause();
+  renderMusic();
+ }).catch(error=>{
+  // Une pause pendant le chargement annule simplement la demande précédente.
+  if(request===musicRequest && error.name!=='AbortError'){musicEnabled=false;renderMusic();}
+ });
+ renderMusic();
+}
+if(audio){
+ audio.id='background-music';audio.hidden=true;audio.loop=true;audio.volume=.18;audio.preload='none';
+ document.body.appendChild(audio);
+ for(const event of ['play','pause','error'])audio.addEventListener(event,renderMusic);
+ musicButton.addEventListener('click',()=>{
+  if(videoMusicSuspended)return;
+  musicEnabled=audio.paused ? true : false;
+  syncMusic();
+ });
+ renderMusic();
 }
 $('#ouvrir').onclick = () => {
   $('#intro').classList.add('out');
@@ -195,7 +235,7 @@ $('#ouvrir').onclick = () => {
   intro.inert=true;
   $('#main-content').inert=false;$('.site-nav').inert=false;$('.site-footer').inert=false;
   const heading=$('#titre');heading.tabIndex=-1;heading.focus({preventScroll:true});
-  if(audio) audio.play().catch(()=>{});
+  musicOpened=true;syncMusic();
   confettis(220);
   setTimeout(()=>confettis(120), 900);
   setTimeout(()=>$('#intro').remove(), 1100);
